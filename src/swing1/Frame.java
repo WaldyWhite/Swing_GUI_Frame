@@ -31,9 +31,11 @@ public class Frame extends JFrame {
 
         //Menu
         JMenuBar menu = new JMenuBar();
-        JMenu urls = new JMenu("Urls");
-        JMenuItem gitHub = new JMenuItem("SkilFactory");
-        gitHub.addActionListener(new ActionListener() {
+        JMenu datei = new JMenu("Datei");
+        JMenu submenu  = new JMenu("Urls");
+
+        JMenuItem skilFactory = new JMenuItem("SkilFactory");
+        skilFactory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Desktop desktop = Desktop.getDesktop();
@@ -52,9 +54,32 @@ public class Frame extends JFrame {
                 }
             }
         });
+        JMenuItem gitHub = new JMenuItem("GitHub");
+        gitHub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Desktop desktop = Desktop.getDesktop();
+                URL url = null;
+                try {
+                    url = new URL("https://github.com/WaldyWhite/");
+                } catch (MalformedURLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    desktop.browse(url.toURI());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
-        menu.add(urls);
-        urls.add(gitHub);
+        submenu.add(skilFactory);
+        submenu.addSeparator();
+        submenu.add(gitHub);
+        menu.add(datei);
+        datei.add(submenu);
         setJMenuBar(menu);
     }
 }
